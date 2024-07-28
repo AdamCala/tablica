@@ -1,0 +1,28 @@
+.main {
+  padding-left: 2em;
+  padding-right: 2em;
+  // height: 0%;
+}
+
+@include respond-to(small) {
+  .posts {
+    // color: red;
+  }
+}
+
+@include respond-to(medium) {
+  .posts {
+    display: block;
+    column-count: 2;
+    column-gap: 1em;
+    div {
+      break-inside: avoid;
+    }
+  }
+}
+
+@include respond-to(large) {
+  .posts {
+    column-count: 3;
+  }
+}
