@@ -1,32 +1,40 @@
 services:
-    frontend:
-        build: 
-          context: ./frontend
-          dockerfile: Dockerfile
-        ports:
-          - "5173:5173"
-    backend:
-        build: 
-          context: ./backend
-          dockerfile: Dockerfile
-        ports:
-          - "3001:3001"
-    database:
-        build: 
-          context: ./database
-          dockerfile: Dockerfile
-        environment:
-          POSTGRES_DB: postgres
-          POSTGRES_USER: admin
-          POSTGRES_PASSWORD: database
-          PGDATA: ./database/.env
-        volumes:
-          - database:/data/postgres
-        ports:
-          - "5432:5432"
-        restart: unless-stopped
-        
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+  database:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: database
+      PGDATA: ./database/.env
+    volumes:
+      - database:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+  ftp:
+    build:
+      context: ./ftp
+      dockerfile: Dockerfile
+    ports:
+      - "22:22"
+    volumes:
+      - ftp-data:/home/sftpuser/sftp/upload
 
 volumes:
-    database:
-      external: true
+  database:
+    external: true
+  ftp-data:
