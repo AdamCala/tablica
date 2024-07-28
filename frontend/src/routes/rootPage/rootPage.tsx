@@ -1,10 +1,20 @@
-function rootPage() {
+import PostComponent from "../../components/PostComponent/PostComponent";
 
+function RootPage() {
   return (
     <>
-    <div></div>
+      <div>
+        <PostComponent image={false} />
+        <PostComponent image={true} />
+        <PostComponent image={true} />
+        <PostComponent image={false} />
+        <PostComponent image={true} />
+        <PostComponent image={false} />
+        <PostComponent image={true} />
+        <PostComponent image={false} />
+      </div>
     </>
-  )
+  );
 }
 
-export default rootPage
+export default RootPage;

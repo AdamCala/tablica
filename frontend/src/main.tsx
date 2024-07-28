@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import RootPage from './routes/rootPage/rootPage.tsx'
-import NotFound from './routes/notFound/notFound.tsx';
-import AuthPage from './routes/authPage/authPage.tsx';
+import RootPage from './routes/RootPage/RootPage.tsx'
+import NotFound from './routes/NotFound/NotFound.tsx';
+import AuthPage from './routes/AuthPage/AuthPage.tsx';
 import './index.scss'
 import {
   createBrowserRouter,
