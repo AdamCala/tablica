@@ -7,4 +7,11 @@ export default defineConfig({
     host: true,
     port: 5173,
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "./src/globals.scss";`,
+      },
+    },
+  },
 });
