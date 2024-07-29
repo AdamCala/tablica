@@ -25,7 +25,9 @@ export const checkAuth = async (
     const isAuthenticated = await response.json();
 
     if (isAuthenticated) {
-      const userResponse = await fetch(`http://localhost:3001/user/${email}`);
+      const userResponse = await fetch(
+        `http://localhost:3001/user/user/${email}`
+      );
       const user = await userResponse.json();
 
       dispatch(

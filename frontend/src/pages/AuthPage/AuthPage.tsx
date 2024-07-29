@@ -1,56 +1,139 @@
 import { useState } from "react";
 import styles from "../../styles/pages/_auth-page.module.scss";
+import { AuthForm, authFormSchema } from "../../models/formModel";
+import { checkAuth } from "../../services/authService";
+import { useAppDispatch } from "../../hooks/storeHook";
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const AuthPage = () => {
-  const handleFormSubmit = () => {};
-  const [AuthType, SetAuthType] = useState<"login" | "sign-up">("login");
+  const [authType, setAuthType] = useState<"login" | "sign-up">("login");
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<null | string>(null);
+  const dispatch = useAppDispatch();
+  const schema = authFormSchema(authType);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<AuthForm>({
+    resolver: yupResolver(schema),
+  });
+
+  const handleFormSubmit = async (data: AuthForm) => {
+    setLoading(true);
+    setErrorMessage(null);
+    if (authType === "sign-up") {
+      try {
+        // Sign-up logic here
+      } catch (error: any) {
+        setLoading(false);
+        const errorCode = error.code;
+        setErrorMessage(errorCode);
+      }
+    } else {
+      try {
+        checkAuth(data.email, data.password, dispatch);
+        reset();
+      } catch (error: any) {
+        setLoading(false);
+        const errorCode = error.code;
+        setErrorMessage(errorCode);
+      }
+    }
+  };
+
   const handleAuthType = () => {
-    SetAuthType((prevAuthType) =>
+    setAuthType((prevAuthType) =>
       prevAuthType === "login" ? "sign-up" : "login"
     );
-    console.log(AuthType);
+    console.log(authType);
   };
 
   return (
     <div className={styles.main}>
-      <form onSubmit={handleFormSubmit}>
-        {AuthType == "login" ? (
+      <form method="post" onSubmit={handleSubmit(handleFormSubmit)}>
+        {authType === "login" ? (
           <>
-            <label htmlFor="email">Email</label>
-            <input type="email" name="email" id="email" />
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password" id="password" />
-            <button type="submit">Login</button>
+            <Controller
+              name="email"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <>
+                  <label htmlFor="email">Email</label>
+                  <input {...field} type="email" id="email" />
+                  {errors.email && <p>{errors.email.message}</p>}
+                </>
+              )}
+            />
+            <Controller
+              name="password"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <>
+                  <label htmlFor="password">Password</label>
+                  <input {...field} type="password" id="password" />
+                  {errors.password && <p>{errors.password.message}</p>}
+                </>
+              )}
+            />
+            <button type="submit" disabled={loading}>
+              Login
+            </button>
           </>
         ) : (
           <>
-            <label htmlFor="name">Name</label>
-            <input type="text" name="name" id="name" />
-            <label htmlFor="email">Email</label>
-            <input type="email" name="email" id="email" />
-            <label htmlFor="confirm-email">Confirm Email</label>
-            <input type="email" name="confirm-email" id="confirm-email" />
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password" id="password" />
-            <label htmlFor="confirm-password">Confirm Password</label>
-            <input
-              type="password"
-              name="confirm-password"
-              id="confirm-password"
+            <Controller
+              name="name"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <>
+                  <label htmlFor="name">Name</label>
+                  <input {...field} type="text" id="name" />
+                  {errors.name && <p>{errors.name.message}</p>}
+                </>
+              )}
             />
-            <button type="submit">Login</button>
+            <Controller
+              name="email"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <>
+                  <label htmlFor="email">Email</label>
+                  <input {...field} type="email" id="email" />
+                  {errors.email && <p>{errors.email.message}</p>}
+                </>
+              )}
+            />
+            <Controller
+              name="password"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <>
+                  <label htmlFor="password">Password</label>
+                  <input {...field} type="password" id="password" />
+                  {errors.password && <p>{errors.password.message}</p>}
+                </>
+              )}
+            />
+            <button type="submit" disabled={loading}>
+              Sign Up
+            </button>
           </>
         )}
       </form>
-      {AuthType == "login" ? (
-        <>
-          <button onClick={handleAuthType}>Create an account</button>
-        </>
+      {authType === "login" ? (
+        <button onClick={handleAuthType}>Create an account</button>
       ) : (
-        <>
-          <button onClick={handleAuthType}>Login into existing account</button>
-        </>
+        <button onClick={handleAuthType}>Login into existing account</button>
       )}
+      {errorMessage && <p>{errorMessage}</p>}
     </div>
   );
 };

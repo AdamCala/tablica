@@ -69,14 +69,28 @@ export class UserController {
   ): Promise<boolean> {
     const { email, password } = UserData;
     const user = await this.userService.userByEmail(email);
-    const providedPassword = await hashPassword(password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!user) {
       throw new NotFoundException('User not found');
-    }
-    if (providedPassword == user.password) {
+    } else if (!isPasswordValid) {
       throw new NotFoundException('Passwords do not match');
     } else {
       return true;
     }
+  }
+
+  @Post('register')
+  async register(
+    @Body() UserData: { email: string; name: string; password: string },
+  ): Promise<boolean> {
+    const { email, name, password } = UserData;
+    const userEmail = await this.userService.userByEmail(email);
+    if (!userEmail) {
+      throw new NotFoundException('Email already exists');
+    }
+    const userPassword = await hashPassword(password);
+    UserData.password = userPassword;
+    this.createUser(UserData);
+    return true;
   }
 }
