@@ -5,6 +5,7 @@ import { User, Prisma } from '@prisma/client';
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
+
   async user(
     userWhereUniqueInput: Prisma.UserWhereUniqueInput,
   ): Promise<User | null> {
@@ -56,6 +57,12 @@ export class UserService {
   }
 
   async deleteUser(where: Prisma.UserWhereUniqueInput): Promise<User> {
+    const user = await this.prisma.user.findUnique({
+      where,
+    });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
     return this.prisma.user.delete({
       where,
     });
