@@ -11,4 +11,6 @@ COPY . .
 
 EXPOSE 3001
 
+RUN npx prisma generate
+
 CMD [ "npm", "run", "start" ]
