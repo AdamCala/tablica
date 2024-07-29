@@ -65,11 +65,11 @@ export class UserController {
 
   @Post('login')
   async login(
-    @Body() UserData: { id: string; password: string },
+    @Body() UserData: { email: string; password: string },
   ): Promise<boolean> {
-    const { id, password } = UserData;
-    const user = await this.getUserById(id);
-    const providedPassword = await hashPassword(user.password);
+    const { email, password } = UserData;
+    const user = await this.userService.userByEmail(email);
+    const providedPassword = await hashPassword(password);
     if (!user) {
       throw new NotFoundException('User not found');
     }
