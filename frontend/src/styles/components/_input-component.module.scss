@@ -1,0 +1,32 @@
+.main {
+  margin: 0.5em;
+  background-color: $background;
+  border: 0.15rem solid rgba($primary, 0.66);
+  border-radius: 0.5vmin;
+  min-height: 2em;
+  color: rgba($primary, 0.66);
+  font-weight: 600;
+  font-size: 1.5em;
+}
+input[type="file"] {
+  border: none;
+  //   color: transparent;
+}
+input[type="file"]::-webkit-file-upload-button {
+  display: none;
+}
+
+input[type="file"]::before {
+  padding: 0.5em;
+  width: 8em;
+  text-align: center;
+  content: "Select Image";
+  color: rgba($primary, 0.66);
+  display: inline-block;
+  background-color: transparent;
+  border: 0.15rem solid rgba($primary, 0.66);
+  border-radius: 0.5vmin;
+  outline: none;
+  white-space: nowrap;
+  cursor: default;
+}

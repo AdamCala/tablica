@@ -1,5 +1,7 @@
 import { useState } from "react";
 import styles from "../../styles/pages/_auth-page.module.scss";
+import buttonStyles from "../../styles/components/_button-component.module.scss";
+import inputStyles from "../../styles/components/_input-component.module.scss";
 import { AuthForm, authFormSchema } from "../../models/formModel";
 import { checkAuth } from "../../services/authService";
 import { useAppDispatch } from "../../hooks/storeHook";
@@ -76,7 +78,12 @@ const AuthPage = () => {
               render={({ field }) => (
                 <>
                   <label htmlFor="email">Email</label>
-                  <input {...field} type="email" id="email" />
+                  <input
+                    className={inputStyles.main}
+                    {...field}
+                    type="email"
+                    id="email"
+                  />
                   {errors.email && <p>{errors.email.message}</p>}
                 </>
               )}
@@ -88,12 +95,21 @@ const AuthPage = () => {
               render={({ field }) => (
                 <>
                   <label htmlFor="password">Password</label>
-                  <input {...field} type="password" id="password" />
+                  <input
+                    className={inputStyles.main}
+                    {...field}
+                    type="password"
+                    id="password"
+                  />
                   {errors.password && <p>{errors.password.message}</p>}
                 </>
               )}
             />
-            <button type="submit" disabled={loading}>
+            <button
+              className={buttonStyles.main}
+              type="submit"
+              disabled={loading}
+            >
               Login
             </button>
           </>
@@ -106,7 +122,12 @@ const AuthPage = () => {
               render={({ field }) => (
                 <>
                   <label htmlFor="name">Name</label>
-                  <input {...field} type="text" id="name" />
+                  <input
+                    className={inputStyles.main}
+                    {...field}
+                    type="text"
+                    id="name"
+                  />
                   {errors.name && <p>{errors.name.message}</p>}
                 </>
               )}
@@ -118,7 +139,12 @@ const AuthPage = () => {
               render={({ field }) => (
                 <>
                   <label htmlFor="email">Email</label>
-                  <input {...field} type="email" id="email" />
+                  <input
+                    className={inputStyles.main}
+                    {...field}
+                    type="email"
+                    id="email"
+                  />
                   {errors.email && <p>{errors.email.message}</p>}
                 </>
               )}
@@ -130,21 +156,34 @@ const AuthPage = () => {
               render={({ field }) => (
                 <>
                   <label htmlFor="password">Password</label>
-                  <input {...field} type="password" id="password" />
+                  <input
+                    className={inputStyles.main}
+                    {...field}
+                    type="password"
+                    id="password"
+                  />
                   {errors.password && <p>{errors.password.message}</p>}
                 </>
               )}
             />
-            <button type="submit" disabled={loading}>
+            <button
+              className={buttonStyles.main}
+              type="submit"
+              disabled={loading}
+            >
               Sign Up
             </button>
           </>
         )}
       </form>
       {authType === "login" ? (
-        <button onClick={handleAuthType}>Create an account</button>
+        <button className={buttonStyles.main} onClick={handleAuthType}>
+          Create an account
+        </button>
       ) : (
-        <button onClick={handleAuthType}>Login into existing account</button>
+        <button className={buttonStyles.main} onClick={handleAuthType}>
+          Login into existing account
+        </button>
       )}
       {errorMessage && <p>{errorMessage}</p>}
     </div>
