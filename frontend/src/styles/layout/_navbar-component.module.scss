@@ -83,6 +83,64 @@
   }
 }
 
+.toggleSwitch {
+  grid-column: 1;
+  grid-row: 3;
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+  margin: 10px;
+  p {
+    position: absolute;
+    top: 5em;
+    left: 5.3em;
+    width: 5em;
+    color: rgba($primary, 0.66);
+  }
+}
+
+/* Giriş stil */
+.toggleSwitch .toggleInput {
+  display: none;
+}
+
+/* Anahtarın stilinin etrafındaki etiketin stil */
+.toggleSwitch .toggleLabel {
+  position: absolute;
+  top: 2em;
+  left: 4.5em;
+  width: 40px;
+  height: 24px;
+  background-color: $primary;
+  border-radius: 34px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Anahtarın yuvarlak kısmının stil */
+.toggleSwitch .toggleLabel::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  background-color: $text;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s;
+}
+
+/* Anahtarın etkin hale gelmesindeki stil değişiklikleri */
+.toggleSwitch .toggleInput:checked + .toggleLabel {
+  background-color: $secondary;
+}
+
+.toggleSwitch .toggleInput:checked + .toggleLabel::before {
+  transform: translateX(16px);
+}
+
 @include respond-to(small) {
   .main {
     // color: red;
