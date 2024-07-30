@@ -32,7 +32,7 @@ const NavbarComponent = () => {
     setLoading(true);
     if (user) {
       try {
-        await sendPost(data.title, data.content, user.id);
+        await sendPost(data.title, data.content, user.id, data.includeImage);
         setLoading(false);
         setIsOpen(false);
         reset();
@@ -115,14 +115,36 @@ Description"
                   />
                 )}
               />
-              <input
-                disabled
-                className={inputStyles.main}
-                type="file"
-                name=""
-                id="file"
-                accept="image/*"
-              />
+              <>
+                <Controller
+                  name="includeImage"
+                  control={control}
+                  render={({ field }) => (
+                    <div className={styles.toggleSwitch}>
+                      <input
+                        className={styles.toggleInput}
+                        id="toggle"
+                        type="checkbox"
+                        checked={field.value}
+                        onChange={(e) => field.onChange(e.target.checked)}
+                      />
+                      <label
+                        className={styles.toggleLabel}
+                        htmlFor="toggle"
+                      ></label>
+                      <p>Include defualt image?</p>
+                    </div>
+                  )}
+                />
+                {/* <input
+                  disabled
+                  className={inputStyles.main}
+                  type="file"
+                  name=""
+                  id="file"
+                  accept="image/*"
+                /> */}
+              </>
               <button
                 type="submit"
                 disabled={loading}
