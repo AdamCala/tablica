@@ -8,15 +8,25 @@ export interface AuthState {
 
 const initialState: AuthState = { user: null };
 
+const loadUserFromLocalStorage = (): AuthState => {
+  const storedUser = localStorage.getItem("user");
+  if (storedUser) {
+    return { user: JSON.parse(storedUser) };
+  }
+  return initialState;
+};
+
 export const authSlice = createSlice({
   name: "Auth",
-  initialState,
+  initialState: loadUserFromLocalStorage(),
   reducers: {
     login: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
+      localStorage.setItem("user", JSON.stringify(action.payload));
     },
     logout: (state) => {
       state.user = null;
+      localStorage.removeItem("user");
     },
   },
 });
