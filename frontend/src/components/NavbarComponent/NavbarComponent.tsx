@@ -2,9 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/storeHook";
 import styles from "../../styles/layout/_navbar-component.module.scss";
 import { logout } from "../../features/authSlice";
+import { useState } from "react";
+import ModalComponent from "../ModalComponent/ModalComponent";
 
 const NavbarComponent = () => {
   const { user } = useAppSelector((state) => state.auth);
+  const [isOpen, setIsOpen] = useState<Boolean>(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -25,14 +28,18 @@ const NavbarComponent = () => {
         <h1>Tablica</h1>
         {user ? (
           <div>
-            <p onClick={handleLoggedClick}>Logout</p>
+            <button onClick={() => setIsOpen(true)}>Post</button>
+            <button onClick={handleLoggedClick}>Logout</button>
           </div>
         ) : (
           <div>
-            <p onClick={handleGuestClick}>Nie</p>
+            <button onClick={handleGuestClick}>Login</button>
           </div>
         )}
       </div>
+      {isOpen && (
+        <ModalComponent isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      )}
       <div className={styles.line} />
     </>
   );
