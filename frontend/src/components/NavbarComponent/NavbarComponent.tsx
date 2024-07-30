@@ -6,12 +6,42 @@ import buttonStyles from "../../styles/components/_button-component.module.scss"
 import { logout } from "../../features/authSlice";
 import { useState } from "react";
 import ModalComponent from "../ModalComponent/ModalComponent";
+import { PostModel, postSchema } from "../../models/postModel";
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { sendPost } from "../../services/uploadService";
 
 const NavbarComponent = () => {
   const { user } = useAppSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState<Boolean>(false);
+  const [loading, setLoading] = useState(false);
+
+  const schema = postSchema();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<PostModel>({
+    resolver: yupResolver(schema),
+  });
+
+  const handleFormSubmit = async (data: PostModel) => {
+    setLoading(true);
+    if (user) {
+      try {
+        await sendPost(data.title, data.content, user.id);
+        setLoading(false);
+        setIsOpen(false);
+        reset();
+      } catch (error) {
+        console.error("Error uploading post:", error);
+        setLoading(false);
+      }
+    }
+  };
 
   const handleGuestClick = () => {
     if (!user) {
@@ -24,6 +54,7 @@ const NavbarComponent = () => {
       dispatch(logout());
     }
   };
+
   return (
     <>
       <div className={styles.main}>
@@ -50,35 +81,58 @@ const NavbarComponent = () => {
       </div>
       {isOpen && (
         <ModalComponent onClose={() => setIsOpen(false)}>
-          <div className={styles.modal}>
-            <input
-              className={inputStyles.main}
-              type="text"
-              id="title"
-              placeholder="Title"
-            />
-            <textarea
-              className={inputStyles.main}
-              name=""
-              id="textarea"
-              placeholder="
+          <form method="post" onSubmit={handleSubmit(handleFormSubmit)}>
+            <div className={styles.modal}>
+              <Controller
+                name="title"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <input
+                    className={inputStyles.main}
+                    {...field}
+                    type="text"
+                    id="title"
+                    placeholder="Title"
+                  />
+                )}
+              />
+              <Controller
+                name="content"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <textarea
+                    className={inputStyles.main}
+                    {...field}
+                    name=""
+                    id="textarea"
+                    placeholder="
 
               
 
-
 Description"
-            />
-            <input
-              className={inputStyles.main}
-              type="file"
-              name=""
-              id="file"
-              accept="image/*"
-            />
-            <button className={buttonStyles.main} id="post">
-              Post
-            </button>
-          </div>
+                  />
+                )}
+              />
+              <input
+                disabled
+                className={inputStyles.main}
+                type="file"
+                name=""
+                id="file"
+                accept="image/*"
+              />
+              <button
+                type="submit"
+                disabled={loading}
+                className={buttonStyles.main}
+                id="post"
+              >
+                Post
+              </button>
+            </div>
+          </form>
         </ModalComponent>
       )}
       <div className={styles.line} />

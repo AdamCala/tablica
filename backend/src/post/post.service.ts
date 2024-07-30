@@ -1,21 +1,34 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Post, Prisma } from '@prisma/client';
+import { Post, Prisma, User } from '@prisma/client';
 
 @Injectable()
 export class PostService {
   constructor(private prisma: PrismaService) {}
 
-  async post(
-    postWhereUniqueInput: Prisma.PostWhereUniqueInput,
-  ): Promise<Post | null> {
+  async post(where: Prisma.PostWhereUniqueInput): Promise<Post | null> {
     return this.prisma.post.findUnique({
-      where: postWhereUniqueInput,
+      where,
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
   }
 
-  async findAll(): Promise<Post[]> {
-    return this.prisma.post.findMany();
+  async findAll(): Promise<(Post & { author: { name: string } })[]> {
+    return this.prisma.post.findMany({
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
   }
 
   async createPost(data: Prisma.PostCreateInput): Promise<Post> {
