@@ -57,9 +57,9 @@ export class UserController {
 
   @Post('login')
   async login(
-    @Body() UserData: { email: string; password: string },
+    @Body() userData: { email: string; password: string },
   ): Promise<number> {
-    const { email, password } = UserData;
+    const { email, password } = userData;
     const user = await this.userService.userByEmail(email);
     if (!user) {
       throw new NotFoundException('User not found');
@@ -73,14 +73,19 @@ export class UserController {
 
   @Post('register')
   async register(
-    @Body() UserData: { email: string; name: string; password: string },
+    @Body() userData: { email: string; name: string; password: string },
   ): Promise<number> {
-    const { email, name, password } = UserData;
-    const userEmail = await this.userService.userByEmail(email);
-    if (userEmail) {
+    const { email, name, password } = userData;
+    const existingUser = await this.userService.userByEmail(email);
+    if (existingUser) {
       throw new NotFoundException('Email already exists');
     }
-    const newUser = await this.createUser(UserData);
+    const hashedPassword = await hashPassword(password);
+    const newUser = await this.userService.createUser({
+      email,
+      name,
+      password: hashedPassword,
+    });
     return newUser.id;
   }
 }
