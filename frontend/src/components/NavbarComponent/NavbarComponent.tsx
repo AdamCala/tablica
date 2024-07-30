@@ -37,9 +37,7 @@ const NavbarComponent = () => {
           </div>
         )}
       </div>
-      {isOpen && (
-        <ModalComponent isOpen={isOpen} onClose={() => setIsOpen(false)} />
-      )}
+      {isOpen && <ModalComponent onClose={() => setIsOpen(false)} />}
       <div className={styles.line} />
     </>
   );

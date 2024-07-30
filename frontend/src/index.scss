@@ -2,3 +2,18 @@
   background-color: $background;
   font-family: "Inter", sans-serif;
 }
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-button {
+  width: 100px;
+  height: 100%;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba($primary, 0.66);
+  border: 0px none #ffffff;
+}
