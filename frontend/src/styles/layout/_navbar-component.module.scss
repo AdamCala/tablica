@@ -1,20 +1,61 @@
 .main {
-  margin-bottom: 16em;
+  margin-top: 2em;
+  margin-bottom: 10em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   h1 {
     padding: 1rem;
-    font-size: 6rem;
+    font-size: 5rem;
     font-weight: 500;
     letter-spacing: 0.1rem;
+    font-weight: 400;
   }
   h1::first-letter {
     color: $background;
-    text-shadow: 2px 2px 0 $text, -2px 2px 0 $text, -2px -2px 0 $text,
-      2px -2px 0 $text;
-    font-size: 8rem;
+    text-shadow: 5px 5px 0 $text, -5px 5px 0 $text, -5px -5px 0 $text,
+      5px -5px 0 $text;
+    font-size: 7rem;
+    font-weight: 900;
   }
 }
+
 .line {
   border-top: 0.15em solid rgba($primary, 0.66);
   color: transparent;
   margin-bottom: 4em;
+}
+
+.modal {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@include respond-to(small) {
+  .main {
+    // color: red;
+  }
+}
+
+@include respond-to(medium) {
+  .main {
+    flex-direction: row;
+    padding-left: 4em;
+    padding-right: 4em;
+    h1 {
+      font-size: 6rem;
+    }
+    h1:first-letter {
+      font-size: 7rem;
+    }
+  }
+}
+
+@include respond-to(large) {
+  .main {
+  }
 }

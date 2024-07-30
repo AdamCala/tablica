@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/storeHook";
 import styles from "../../styles/layout/_navbar-component.module.scss";
+import buttonStyles from "../../styles/components/_button-component.module.scss";
 import { logout } from "../../features/authSlice";
 import { useState } from "react";
 import ModalComponent from "../ModalComponent/ModalComponent";
@@ -28,16 +29,29 @@ const NavbarComponent = () => {
         <h1>Tablica</h1>
         {user ? (
           <div>
-            <button onClick={() => setIsOpen(true)}>Post</button>
-            <button onClick={handleLoggedClick}>Logout</button>
+            <button
+              className={buttonStyles.main}
+              onClick={() => setIsOpen(true)}
+            >
+              Post
+            </button>
+            <button className={buttonStyles.main} onClick={handleLoggedClick}>
+              Logout
+            </button>
           </div>
         ) : (
           <div>
-            <button onClick={handleGuestClick}>Login</button>
+            <button className={buttonStyles.main} onClick={handleGuestClick}>
+              Login
+            </button>
           </div>
         )}
       </div>
-      {isOpen && <ModalComponent onClose={() => setIsOpen(false)} />}
+      {isOpen && (
+        <ModalComponent onClose={() => setIsOpen(false)}>
+          <div className={styles.modal}>test</div>
+        </ModalComponent>
+      )}
       <div className={styles.line} />
     </>
   );
