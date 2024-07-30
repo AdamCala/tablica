@@ -6,12 +6,14 @@ import { useAppDispatch } from "../../hooks/storeHook";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createUser } from "../../services/createUser";
+import { useNavigate } from "react-router-dom";
 
 const AuthPage = () => {
   const [authType, setAuthType] = useState<"login" | "sign-up">("login");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<null | string>(null);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const schema = authFormSchema(authType);
   const {
     control,
@@ -29,22 +31,27 @@ const AuthPage = () => {
       try {
         if (data.name) {
           await createUser(data.name, data.email, data.password, dispatch);
+          reset();
+          setLoading(false);
+          navigate("/");
         } else {
           throw new Error("Name is required for sign-up");
         }
       } catch (error: any) {
+        console.error(error);
+        setErrorMessage(error.message || "An unexpected error occurred");
         setLoading(false);
-        const errorCode = error.code;
-        setErrorMessage(errorCode);
       }
     } else {
       try {
-        checkAuth(data.email, data.password, dispatch);
+        await checkAuth(data.email, data.password, dispatch);
         reset();
-      } catch (error: any) {
         setLoading(false);
-        const errorCode = error.code;
-        setErrorMessage(errorCode);
+        navigate("/");
+      } catch (error: any) {
+        console.error(error);
+        setErrorMessage(error.message || "An unexpected error occurred");
+        setLoading(false);
       }
     }
   };
@@ -53,7 +60,8 @@ const AuthPage = () => {
     setAuthType((prevAuthType) =>
       prevAuthType === "login" ? "sign-up" : "login"
     );
-    console.log(authType);
+    reset();
+    setLoading(false);
   };
 
   return (

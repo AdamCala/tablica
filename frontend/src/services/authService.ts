@@ -19,7 +19,10 @@ export const checkAuth = async (
     });
 
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      const errorData = await response.json();
+      const errorMessage = errorData.message || "Network response was not ok";
+      console.error("Server error:", errorMessage);
+      throw new Error(errorMessage);
     }
 
     const authUserID = await response.json();
@@ -39,6 +42,10 @@ export const checkAuth = async (
       );
     }
   } catch (error) {
-    console.error("Failed to authenticate:", error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unknown error occurred");
+    }
   }
 };
