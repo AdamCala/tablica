@@ -61,9 +61,20 @@ const NavbarComponent = () => {
               className={inputStyles.main}
               name=""
               id="textarea"
-              placeholder="Description"
+              placeholder="
+
+              
+
+
+Description"
             />
-            <input className={inputStyles.main} type="file" name="" id="file" />
+            <input
+              className={inputStyles.main}
+              type="file"
+              name=""
+              id="file"
+              accept="image/*"
+            />
             <button className={buttonStyles.main} id="post">
               Post
             </button>
