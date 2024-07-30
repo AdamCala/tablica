@@ -1,6 +1,13 @@
 :root {
   background-color: $background;
   font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 ::-webkit-scrollbar {

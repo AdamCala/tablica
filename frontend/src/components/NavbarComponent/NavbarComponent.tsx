@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/storeHook";
 import styles from "../../styles/layout/_navbar-component.module.scss";
+import inputStyles from "../../styles/components/_input-component.module.scss";
 import buttonStyles from "../../styles/components/_button-component.module.scss";
 import { logout } from "../../features/authSlice";
 import { useState } from "react";
@@ -49,7 +50,24 @@ const NavbarComponent = () => {
       </div>
       {isOpen && (
         <ModalComponent onClose={() => setIsOpen(false)}>
-          <div className={styles.modal}>test</div>
+          <div className={styles.modal}>
+            <input
+              className={inputStyles.main}
+              type="text"
+              id="title"
+              placeholder="Title"
+            />
+            <textarea
+              className={inputStyles.main}
+              name=""
+              id="textarea"
+              placeholder="Description"
+            />
+            <input className={inputStyles.main} type="file" name="" id="file" />
+            <button className={buttonStyles.main} id="post">
+              Post
+            </button>
+          </div>
         </ModalComponent>
       )}
       <div className={styles.line} />
