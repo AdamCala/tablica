@@ -1,18 +1,20 @@
 import { login } from "../features/authSlice";
 import { AppDispatch } from "../store";
 
-export const checkAuth = async (
+export const createUser = async (
+  name: string,
   email: string,
   password: string,
   dispatch: AppDispatch
 ) => {
   try {
-    const response = await fetch("http://localhost:3001/user/login/", {
+    const response = await fetch("http://localhost:3001/user/register/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        name,
         email,
         password,
       }),

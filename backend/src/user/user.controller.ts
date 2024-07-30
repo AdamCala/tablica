@@ -13,21 +13,13 @@ import { User as UserModel } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
 async function hashPassword(password: string): Promise<string> {
-  const saltOrRounds = 10;
-  const salt = await bcrypt.genSalt();
-  const hash = await bcrypt.hash(password, saltOrRounds);
+  const rounds = 10;
+  const salt = await bcrypt.genSalt(rounds);
+  const hash = await bcrypt.hash(password, salt);
 
   return hash;
 }
 
-async function verifyPassword(
-  password: string,
-  hash: string,
-): Promise<boolean> {
-  const isMatch = await bcrypt.compare(password, hash);
-
-  return isMatch;
-}
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -66,31 +58,29 @@ export class UserController {
   @Post('login')
   async login(
     @Body() UserData: { email: string; password: string },
-  ): Promise<boolean> {
+  ): Promise<number> {
     const { email, password } = UserData;
     const user = await this.userService.userByEmail(email);
-    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!user) {
       throw new NotFoundException('User not found');
-    } else if (!isPasswordValid) {
-      throw new NotFoundException('Passwords do not match');
-    } else {
-      return true;
     }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new NotFoundException('Passwords do not match');
+    }
+    return user.id;
   }
 
   @Post('register')
   async register(
     @Body() UserData: { email: string; name: string; password: string },
-  ): Promise<boolean> {
+  ): Promise<number> {
     const { email, name, password } = UserData;
     const userEmail = await this.userService.userByEmail(email);
-    if (!userEmail) {
+    if (userEmail) {
       throw new NotFoundException('Email already exists');
     }
-    const userPassword = await hashPassword(password);
-    UserData.password = userPassword;
-    this.createUser(UserData);
-    return true;
+    const newUser = await this.createUser(UserData);
+    return newUser.id;
   }
 }

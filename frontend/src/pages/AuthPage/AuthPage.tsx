@@ -5,6 +5,7 @@ import { checkAuth } from "../../services/authService";
 import { useAppDispatch } from "../../hooks/storeHook";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { createUser } from "../../services/createUser";
 
 const AuthPage = () => {
   const [authType, setAuthType] = useState<"login" | "sign-up">("login");
@@ -26,7 +27,11 @@ const AuthPage = () => {
     setErrorMessage(null);
     if (authType === "sign-up") {
       try {
-        // Sign-up logic here
+        if (data.name) {
+          await createUser(data.name, data.email, data.password, dispatch);
+        } else {
+          throw new Error("Name is required for sign-up");
+        }
       } catch (error: any) {
         setLoading(false);
         const errorCode = error.code;
