@@ -1,6 +1,6 @@
 <h1 align="center" id="title">Tablica</h1>
 
-<p id="description">Website for posting advertisements / or just random posts. Right now uses placeholder images - planned custom image upload</p><br /> <br />
+<p id="description">Website for posting advertisements / or just random posts. Right now uses placeholder images - planned custom image upload</p><br />
 
 <h2>💻 Built with</h2>
 
