@@ -52,13 +52,13 @@ Technologies used in the project:
 <br /> 
 <h2>Project Screenshots:</h2><br />
 
-<img src="https://i.imgur.com/OJ2drHQ.png" alt="project-screenshot" width="650" height="400/"><br />
+<img src="https://i.imgur.com/OJ2drHQ.png" alt="project-screenshot" width="650" height="300/"><br />
 
-<img src="https://i.imgur.com/szMnELJ.png" alt="project-screenshot" width="650" height="400/"><br />
+<img src="https://i.imgur.com/szMnELJ.png" alt="project-screenshot" width="650" height="300/"><br />
 
-<img src="https://i.imgur.com/FmBntVv.png" alt="project-screenshot" width="650" height="400/"><br />
+<img src="https://i.imgur.com/FmBntVv.png" alt="project-screenshot" width="650" height="300/"><br />
 
-<img src="https://i.imgur.com/nNl9xDi.png" alt="project-screenshot" width="650" height="400/"><br /> <br />
+<img src="https://i.imgur.com/nNl9xDi.png" alt="project-screenshot" width="650" height="300/"><br /> <br />
 
 <h2>🛠️ Installation Steps:</h2>
 
