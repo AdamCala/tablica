@@ -1,73 +1,116 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# API Documentation
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Post API
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### Get Post by ID
+- **Endpoint:** `GET /post/post/:id`
+- **Description:** Retrieve a post by its unique ID.
+- **Parameters:**
+  - `id` (path parameter): The ID of the post to retrieve.
+- **Responses:**
+  - `200 OK`: Returns the post with the specified ID.
+  - `404 Not Found`: If the post with the given ID does not exist.
 
-## Description
+### Get All Posts
+- **Endpoint:** `GET /post/posts`
+- **Description:** Retrieve all posts.
+- **Responses:**
+  - `200 OK`: Returns a list of all posts.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Create a Post
+- **Endpoint:** `POST /post/createPost`
+- **Description:** Create a new post.
+- **Request Body:**
+  - `title` (string): The title of the post.
+  - `content` (string): The content of the post.
+  - `image` (string): The image URL for the post.
+  - `authorId` (number): The ID of the author.
+- **Responses:**
+  - `201 Created`: Returns the created post.
+  - `400 Bad Request`: If required fields are missing or invalid.
 
-## Installation
+### Update a Post
+- **Endpoint:** `PUT /post/updatePost`
+- **Description:** Update an existing post.
+- **Request Body:**
+  - `where` (object): Criteria to find the post.
+    - `id` (number): The ID of the post to update.
+  - `data` (object): Fields to update.
+    - `title` (string, optional): New title of the post.
+    - `content` (string, optional): New content of the post.
+    - `image` (string, optional): New image URL for the post.
+- **Responses:**
+  - `200 OK`: Returns the updated post.
+  - `404 Not Found`: If the post with the given ID does not exist.
 
-```bash
-$ npm install
-```
+### Delete a Post
+- **Endpoint:** `DELETE /post/deletePost/:id`
+- **Description:** Delete a post by its unique ID.
+- **Parameters:**
+  - `id` (path parameter): The ID of the post to delete.
+- **Responses:**
+  - `200 OK`: Returns `true` if the post was successfully deleted.
+  - `404 Not Found`: If the post with the given ID does not exist.
 
-## Running the app
+## User API
 
-```bash
-# development
-$ npm run start
+### Get User by ID
+- **Endpoint:** `GET /user/user/:id`
+- **Description:** Retrieve a user by its unique ID.
+- **Parameters:**
+  - `id` (path parameter): The ID of the user to retrieve.
+- **Responses:**
+  - `200 OK`: Returns the user with the specified ID.
+  - `404 Not Found`: If the user with the given ID does not exist.
 
-# watch mode
-$ npm run start:dev
+### Get All Users
+- **Endpoint:** `GET /user/users`
+- **Description:** Retrieve all users.
+- **Responses:**
+  - `200 OK`: Returns a list of all users.
 
-# production mode
-$ npm run start:prod
-```
+### Create a User
+- **Endpoint:** `POST /user/createUser`
+- **Description:** Create a new user.
+- **Request Body:**
+  - `email` (string): The email of the user.
+  - `name` (string): The name of the user.
+  - `password` (string): The password of the user.
+- **Responses:**
+  - `201 Created`: Returns the created user.
+  - `400 Bad Request`: If required fields are missing or invalid.
 
-## Test
+### Update a User
+- **Endpoint:** `PUT /user/updateUser`
+- **Description:** Update an existing user.
+- **Request Body:**
+  - `where` (object): Criteria to find the user.
+    - `id` (number): The ID of the user to update.
+  - `data` (object): Fields to update.
+    - `email` (string, optional): New email of the user.
+    - `name` (string, optional): New name of the user.
+    - `password` (string, optional): New password of the user.
+- **Responses:**
+  - `200 OK`: Returns the updated user.
+  - `404 Not Found`: If the user with the given ID does not exist.
 
-```bash
-# unit tests
-$ npm run test
+### Login
+- **Endpoint:** `POST /user/login`
+- **Description:** Authenticate a user.
+- **Request Body:**
+  - `email` (string): The email of the user.
+  - `password` (string): The password of the user.
+- **Responses:**
+  - `200 OK`: Returns the user ID if authentication is successful.
+  - `404 Not Found`: If the user with the given email does not exist or password is incorrect.
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+### Register
+- **Endpoint:** `POST /user/register`
+- **Description:** Register a new user.
+- **Request Body:**
+  - `email` (string): The email of the user.
+  - `name` (string): The name of the user.
+  - `password` (string): The password of the user.
+- **Responses:**
+  - `201 Created`: Returns the new user ID.
+  - `400 Bad Request`: If the email already exists or if required fields are missing.
