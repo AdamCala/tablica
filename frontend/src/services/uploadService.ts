@@ -2,11 +2,11 @@ export const sendPost = async (
   title: string,
   content: string,
   author: string,
-  includeImage: boolean | undefined
+  includeImage: boolean
 ) => {
   let imageUrl = "";
   if (includeImage) {
-    let imageUrl = "https://picsum.photos/500/300";
+    imageUrl = "https://picsum.photos/500/300";
   }
 
   const postResponse = await fetch("http://localhost:3001/post/createPost", {
