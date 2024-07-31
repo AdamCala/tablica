@@ -5,6 +5,10 @@ export const postSchema = () => {
     title: yup.string().required("Title is required"),
 
     content: yup.string().required("Description is required"),
+
+    includeImage: yup
+      .boolean()
+      .required("If you see this something has gone very wrong"),
   });
 
   return schema;
@@ -13,7 +17,7 @@ export const postSchema = () => {
 export interface PostModel {
   title: string;
   content: string;
-  includeImage?: boolean;
+  includeImage: boolean;
 }
 
 interface Author {
