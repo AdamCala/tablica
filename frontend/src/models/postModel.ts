@@ -15,3 +15,16 @@ export interface PostModel {
   content: string;
   includeImage?: boolean;
 }
+
+interface Author {
+  name: string;
+}
+
+export interface PostEntity {
+  id: number;
+  title: string;
+  content: string;
+  image: string;
+  authorId: number;
+  author: Author;
+}

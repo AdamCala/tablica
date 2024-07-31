@@ -1,28 +1,16 @@
 import styles from "../../styles/components/_post-component.module.scss";
+import { PostEntity } from "../../models/postModel";
 
-interface Post {
-  image: boolean;
-}
-
-const PostComponent: React.FC<Post> = (props) => {
-  const { image } = props;
+const PostComponent: React.FC<PostEntity> = (props) => {
+  const { id, title, content, image, author } = props;
   return (
     <div className={styles.main}>
       <div className={styles.text}>
-        <h1>Test Title</h1>
-        <h3>Jon Snow</h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
-          architecto, veniam ad est accusantium laborum, reprehenderit velit
-          omnis possimus iusto harum porro doloribus veritatis. Recusandae
-          doloremque quibusdam nesciunt accusamus eaque?
-        </p>
+        <h1>{props.title}</h1>
+        <h3>{props.author.name}</h3>
+        <p>{props.content}</p>
       </div>
-      {image ? (
-        <img src="https://picsum.photos/500/300" alt="test image" />
-      ) : (
-        <></>
-      )}
+      {image ? <img src={props.image} alt={props.title} /> : <></>}
     </div>
   );
 };
