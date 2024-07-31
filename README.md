@@ -39,13 +39,13 @@ git clone https://github.com/AdamCala/tablica.git
 cd /tablica/
 ```
 
-<p>3. Cretae docker volume for database</p>
+<p>3. Create docker volume for database</p>
 
 ```
 docker volume create database
 ```
 
-<p>4. Duild containter</p>
+<p>4. Build containter</p>
 
 ```
 docker-compose up -d --build
