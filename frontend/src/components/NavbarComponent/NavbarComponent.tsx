@@ -11,7 +11,11 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { sendPost } from "../../services/uploadService";
 
-const NavbarComponent = () => {
+interface NavbarComponentProps {
+  onPostClick: () => void;
+}
+
+const NavbarComponent: React.FC<NavbarComponentProps> = ({ onPostClick }) => {
   const { user } = useAppSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState<Boolean>(false);
   const [loading, setLoading] = useState(false);
@@ -36,6 +40,7 @@ const NavbarComponent = () => {
         setLoading(false);
         setIsOpen(false);
         reset();
+        onPostClick();
       } catch (error) {
         console.error("Error uploading post:", error);
         setLoading(false);
